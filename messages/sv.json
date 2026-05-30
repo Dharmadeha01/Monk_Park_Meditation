@@ -1,0 +1,109 @@
+{
+  "header": {
+    "brandName": "Veckomeditation",
+    "brandSub": "MED YOGAKLOSTER",
+    "register": "Anmäl dig"
+  },
+  "hero": {
+    "kicker": "En veckopaus i naturen",
+    "h1": "Meditation med en munk i parken",
+    "tagline": "Tryck paus på veckan. Sätt dig i gräset, andas, och känn något äkta — tillsammans.",
+    "pills": {
+      "day": "Varje torsdag",
+      "time": "18:30",
+      "place": "Linköping",
+      "price": "Gratis"
+    }
+  },
+  "form": {
+    "eyebrow": "Gratis · Ingen vana krävs",
+    "title": "Boka din plats",
+    "sub": "Två minuter nu, en timme av lugn på torsdag.",
+    "nameLabel": "Ditt namn",
+    "namePlaceholder": "t.ex. Anna",
+    "nameError": "Skriv ditt namn.",
+    "phoneLabel": "Mobil (WhatsApp)",
+    "phonePlaceholder": "+46 70 123 45 67",
+    "phoneError": "Lägg till ett mobilnummer så vi når dig.",
+    "button": "Anmäl dig",
+    "note": "Vi skickar detaljerna till din WhatsApp.",
+    "successTitle": "Du är anmäld — vi väntar på dig!",
+    "successBody": "Vi har skickat tid och plats till din WhatsApp. Vi ses i parken.",
+    "again": "Anmäl någon annan"
+  },
+  "about": {
+    "kicker": "Timmen",
+    "h2": "Tre stilla delar, sextio lugna minuter",
+    "lead": "Vi samlas när kvällen mjuknar. Ingen vana krävs — kom precis som du är.",
+    "steps": [
+      {
+        "dur": "20 min",
+        "title": "Musik & mantra",
+        "desc": "Vi öppnar med levande musik och enkel sång för att stilla sinnet."
+      },
+      {
+        "dur": "20 min",
+        "title": "Tyst meditation",
+        "desc": "Vägledd till stillhet, sedan tysta tillsammans under träden."
+      },
+      {
+        "dur": "20 min",
+        "title": "Te & fika",
+        "desc": "Vi avslutar med varmt te, något sött och lätt samtal."
+      }
+    ],
+    "bringHeading": "Ta med dig",
+    "bringItems": [
+      "Något att sitta på — vi har extra mattor",
+      "Ett varmt lager för när solen går ner"
+    ],
+    "donationFreeTag": "Alltid gratis",
+    "donationNote": "Träffen är gratis och bygger på frivilliga gåvor. Ge vad som känns rätt — eller inget alls."
+  },
+  "teacher": {
+    "role": "Din vägledare",
+    "name": "Dada Anandasvarupa",
+    "bio1": "Dada Anandasvarupa är en yogisk munk som har levt munklivet i över 7 år. De senaste 4+ åren har han bott och tränat här i Sverige.",
+    "bio2": "Han leder dessa kvällar med värme och lätthet — du känner dig välkommen från första minuten.",
+    "linkLabel": "Mer om klostret & Dada"
+  },
+  "location": {
+    "kicker": "Var",
+    "h2": "Hitta oss i parken",
+    "lead": "Vi träffas på samma plats i parken varje vecka. Exakt plats nedan — vi ses där.",
+    "pinLabel": "Stora eken · Trädgårdsföreningen",
+    "mapNote": "Samma plats varje vecka"
+  },
+  "faq": {
+    "kicker": "Bra att veta",
+    "h2": "Frågor & svar",
+    "items": [
+      {
+        "q": "Vad ska jag ta med?",
+        "a": "Något att sitta på — en matta, filt eller kudde. Det är allt. Kom i vilka kläder och vilket humör som helst."
+      },
+      {
+        "q": "Är det verkligen gratis?",
+        "a": "Ja. Det är donationsbaserat — ge om du vill, men inget förväntas."
+      },
+      {
+        "q": "Hur länge håller det på?",
+        "a": "Ungefär en timme: 20 min musik & mantra, 20 min tyst meditation, 20 min te & fika."
+      }
+    ]
+  },
+  "cta": {
+    "kicker": "Torsdag · 18:30",
+    "h2": "Vi ses i parken på torsdag",
+    "button": "Boka din plats"
+  },
+  "footer": {
+    "brandName": "Yogakloster",
+    "brandSub": "Meditation med en munk i parken",
+    "links": {
+      "monastery": "Klostret",
+      "instagram": "Instagram"
+    },
+    "fine": "Linköping · Gratis & öppet för alla · Frivilliga gåvor"
+  }
+}

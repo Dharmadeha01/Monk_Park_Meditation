@@ -1,0 +1,109 @@
+{
+  "header": {
+    "brandName": "Weekly Meditation",
+    "brandSub": "WITH YOGA MONASTERY",
+    "register": "Register"
+  },
+  "hero": {
+    "kicker": "A weekly pause in nature",
+    "h1": "Meditation with a Monk in a Park",
+    "tagline": "Press pause on the week. Sit down in the grass, breathe, and feel something real — together.",
+    "pills": {
+      "day": "Every Thursday",
+      "time": "18:30",
+      "place": "Linköping",
+      "price": "Free"
+    }
+  },
+  "form": {
+    "eyebrow": "Free · No experience needed",
+    "title": "Save your spot",
+    "sub": "Two minutes now, an hour of calm on Thursday.",
+    "nameLabel": "Your name",
+    "namePlaceholder": "e.g. Anna",
+    "nameError": "Please tell us your name.",
+    "phoneLabel": "Mobile (WhatsApp)",
+    "phonePlaceholder": "+46 70 123 45 67",
+    "phoneError": "Add a mobile number so we can reach you.",
+    "button": "Register",
+    "note": "We'll send the details to your WhatsApp.",
+    "successTitle": "You're registered — waiting for you!",
+    "successBody": "We've sent the time and the exact spot to your WhatsApp. See you in the park.",
+    "again": "Register someone else"
+  },
+  "about": {
+    "kicker": "The hour",
+    "h2": "Three gentle parts, sixty unhurried minutes",
+    "lead": "We gather as the evening softens. No experience needed — just come as you are.",
+    "steps": [
+      {
+        "dur": "20 min",
+        "title": "Music & mantra",
+        "desc": "We open with live music and simple chant to settle the mind."
+      },
+      {
+        "dur": "20 min",
+        "title": "Silent meditation",
+        "desc": "Guided into stillness, then quiet together beneath the trees."
+      },
+      {
+        "dur": "20 min",
+        "title": "Tea & fika",
+        "desc": "We close with warm tea, something sweet, and easy conversation."
+      }
+    ],
+    "bringHeading": "What to bring",
+    "bringItems": [
+      "Something to sit on — we bring extra mats",
+      "A warm layer for when the sun dips"
+    ],
+    "donationFreeTag": "Always free",
+    "donationNote": "The gathering is free and donation-based. Give what feels right — or nothing at all."
+  },
+  "teacher": {
+    "role": "Your guide",
+    "name": "Dada Anandasvarupa",
+    "bio1": "Dada Anandasvarupa is a yogic monk who has lived the monk's life for over 7 years. For the past 4+ years he has lived and trained here in Sweden.",
+    "bio2": "He guides these evenings with warmth and a light touch — you'll feel welcome from the first minute.",
+    "linkLabel": "More about the monastery & Dada"
+  },
+  "location": {
+    "kicker": "Where",
+    "h2": "Find us in the park",
+    "lead": "We meet at the same spot in the park every week. Exact location below — see you there.",
+    "pinLabel": "The big oak · Trädgårdsföreningen",
+    "mapNote": "Same spot every week"
+  },
+  "faq": {
+    "kicker": "Good to know",
+    "h2": "Questions, answered",
+    "items": [
+      {
+        "q": "What should I bring?",
+        "a": "Something to sit on — a mat, blanket or cushion. That's it. Come in any clothes and any mood."
+      },
+      {
+        "q": "Is it really free?",
+        "a": "Yes. It's donation based — give if you want to, but nothing is expected."
+      },
+      {
+        "q": "How long does it last?",
+        "a": "About one hour: 20 min music & mantra, 20 min silent meditation, 20 min tea & fika."
+      }
+    ]
+  },
+  "cta": {
+    "kicker": "Thursday · 18:30",
+    "h2": "See you Thursday in the park",
+    "button": "Save your spot"
+  },
+  "footer": {
+    "brandName": "Yoga Monastery",
+    "brandSub": "Meditation with a Monk in a Park",
+    "links": {
+      "monastery": "The monastery",
+      "instagram": "Instagram"
+    },
+    "fine": "Linköping · Free & open to all · Donation-based"
+  }
+}

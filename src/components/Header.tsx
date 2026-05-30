@@ -1,0 +1,127 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/navigation";
+import { Badge } from "./Badge";
+
+export function Header() {
+  const t = useTranslations("header");
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  function switchLocale(next: "sv" | "en") {
+    router.replace(pathname, { locale: next });
+  }
+
+  function scrollToForm(e: React.MouseEvent) {
+    e.preventDefault();
+    const el = document.getElementById("register");
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 72;
+    window.scrollTo({ top, behavior: "smooth" });
+    setTimeout(() => {
+      const input = document.getElementById("f-name");
+      if (input) input.focus();
+    }, 520);
+  }
+
+  return (
+    <header
+      className="site-header"
+      data-scrolled={scrolled ? "true" : "false"}
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+        background: "rgba(250,244,234,0.82)",
+        backdropFilter: "saturate(1.1) blur(12px)",
+        borderBottom: "1px solid transparent",
+        transition: "border-color 0.25s ease, box-shadow 0.25s ease",
+        ...(scrolled
+          ? {
+              borderBottomColor: "var(--hairline)",
+              boxShadow: "0 6px 20px rgba(42,33,24,0.05)",
+            }
+          : {}),
+      }}
+    >
+      <div className="wrap header-inner" style={{ height: 72, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+        {/* Brand */}
+        <a
+          href="#top"
+          aria-label="Meditation — home"
+          style={{ display: "flex", alignItems: "center", gap: 13, textDecoration: "none", color: "var(--ink)" }}
+        >
+          <Badge size={46} />
+          <span className="brand-text" style={{ display: "flex", flexDirection: "column", lineHeight: 1.05 }}>
+            <span style={{ fontFamily: "var(--font-head)", fontSize: 19, fontVariationSettings: '"SOFT" 40, "opsz" 30' }}>
+              {t("brandName")}
+            </span>
+            <span className="brand-sub" style={{ fontSize: 11.5, letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--ink-faint)", fontWeight: 600 }}>
+              {t("brandSub")}
+            </span>
+          </span>
+        </a>
+
+        {/* Actions */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {/* Language toggle — always visible, no hamburger */}
+          <div
+            role="group"
+            aria-label="Language"
+            style={{ display: "inline-flex", background: "var(--cream-deep)", border: "1px solid var(--hairline)", borderRadius: 999, padding: 3, gap: 2 }}
+          >
+            {(["sv", "en"] as const).map((l) => (
+              <button
+                key={l}
+                type="button"
+                aria-pressed={locale === l}
+                onClick={() => switchLocale(l)}
+                style={{
+                  border: "none",
+                  background: locale === l ? "var(--card)" : "transparent",
+                  fontFamily: "var(--font-body)",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                  color: locale === l ? "var(--ink)" : "var(--ink-soft)",
+                  padding: "6px 12px",
+                  borderRadius: 999,
+                  cursor: "pointer",
+                  transition: "color 0.15s ease, background 0.15s ease",
+                  boxShadow: locale === l ? "var(--shadow-sm)" : "none",
+                }}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
+          {/* Register button */}
+          <a
+            href="#register"
+            onClick={scrollToForm}
+            className="btn btn-primary"
+            style={{ padding: "11px 22px", fontSize: 15 }}
+          >
+            <span className="long">{t("register")}</span>
+          </a>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 720px) { .brand-sub { display: none !important; } }
+        @media (max-width: 560px) { .brand-text { display: none !important; } .long { display: none !important; } .header-inner { height: 64px !important; } }
+      `}</style>
+    </header>
+  );
+}
