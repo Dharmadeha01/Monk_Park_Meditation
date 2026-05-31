@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
@@ -12,7 +12,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://meditation-monk-park.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://monk-meditation-park.vercel.app";
   const metadataBase = new URL(siteUrl);
 
   const titles = {
@@ -53,11 +53,16 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
+
+  // Tell next-intl the locale explicitly — required when not using middleware
+  setRequestLocale(locale);
+
   if (!routing.locales.includes(locale as "sv" | "en")) {
     notFound();
   }
 
-  const messages = await getMessages();
+  // Pass locale directly so getMessages doesn't need the middleware header
+  const messages = await getMessages({ locale });
 
   return (
     <html lang={locale}>
@@ -70,7 +75,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         />
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
       </body>

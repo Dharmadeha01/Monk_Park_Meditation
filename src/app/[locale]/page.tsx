@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import { getSiteSettings, loc } from "@/sanity/queries";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -12,6 +13,10 @@ type Props = { params: Promise<{ locale: string }> };
 
 export default async function Page({ params }: Props) {
   const { locale } = await params;
+
+  // Required without middleware — tells next-intl the locale for this request
+  setRequestLocale(locale);
+
   const settings = await getSiteSettings();
 
   return (
@@ -22,7 +27,11 @@ export default async function Page({ params }: Props) {
         <About />
         <Teacher
           teacherImageUrl={settings?.teacherImageUrl}
-          monasteryUrl={settings?.monasteryUrl || loc(settings, "monasteryUrl", locale) || "https://yogamonastery.org/"}
+          monasteryUrl={
+            settings?.monasteryUrl ||
+            loc(settings, "monasteryUrl", locale) ||
+            "https://yogamonastery.org/"
+          }
         />
         <Location mapEmbedSrc={settings?.mapEmbedSrc} />
         <FAQ />
@@ -30,7 +39,9 @@ export default async function Page({ params }: Props) {
       </main>
       <Footer
         monasteryUrl={settings?.monasteryUrl || "https://yogamonastery.org/"}
-        instagramUrl={settings?.instagramUrl || "https://www.instagram.com/yoga.monastery/"}
+        instagramUrl={
+          settings?.instagramUrl || "https://www.instagram.com/yoga.monastery/"
+        }
       />
     </>
   );
