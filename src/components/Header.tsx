@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { Badge } from "./Badge";
+import Image from "next/image";
 
 export function Header() {
   const t = useTranslations("header");
@@ -36,38 +36,74 @@ export function Header() {
 
   return (
     <header
-      className="site-header"
-      data-scrolled={scrolled ? "true" : "false"}
       style={{
         position: "sticky",
         top: 0,
         zIndex: 50,
         background: "rgba(250,244,234,0.82)",
         backdropFilter: "saturate(1.1) blur(12px)",
-        borderBottom: "1px solid transparent",
+        WebkitBackdropFilter: "saturate(1.1) blur(12px)",
+        borderBottom: `1px solid ${scrolled ? "var(--hairline)" : "transparent"}`,
+        boxShadow: scrolled ? "0 6px 20px rgba(42,33,24,0.05)" : "none",
         transition: "border-color 0.25s ease, box-shadow 0.25s ease",
-        ...(scrolled
-          ? {
-              borderBottomColor: "var(--hairline)",
-              boxShadow: "0 6px 20px rgba(42,33,24,0.05)",
-            }
-          : {}),
       }}
     >
-      <div className="wrap header-inner" style={{ height: 72, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+      <div
+        className="wrap"
+        style={{
+          height: 72,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 16,
+        }}
+      >
         {/* Brand */}
         <a
           href="#top"
-          aria-label="Meditation — home"
-          style={{ display: "flex", alignItems: "center", gap: 13, textDecoration: "none", color: "var(--ink)" }}
+          aria-label="Weekly Meditation — home"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            textDecoration: "none",
+            color: "var(--ink)",
+          }}
         >
-          <Badge size={46} />
-          <span className="brand-text" style={{ display: "flex", flexDirection: "column", lineHeight: 1.05 }}>
-            <span style={{ fontFamily: "var(--font-head)", fontSize: 19, fontVariationSettings: '"SOFT" 40, "opsz" 30' }}>
-              {t("brandName")}
+          {/* Real logo image */}
+          <Image
+            src="/ym_logo.png"
+            alt="Yoga Monastery logo"
+            width={44}
+            height={44}
+            style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0 }}
+            priority
+          />
+          <span
+            className="brand-text"
+            style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}
+          >
+            <span
+              style={{
+                fontFamily: "var(--font-head)",
+                fontSize: 19,
+                fontVariationSettings: '"SOFT" 40, "opsz" 30',
+                color: "var(--ink)",
+              }}
+            >
+              Weekly Meditation
             </span>
-            <span className="brand-sub" style={{ fontSize: 11.5, letterSpacing: "0.13em", textTransform: "uppercase", color: "var(--ink-faint)", fontWeight: 600 }}>
-              {t("brandSub")}
+            <span
+              className="brand-sub"
+              style={{
+                fontSize: 10.5,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "var(--ink-faint)",
+                fontWeight: 700,
+              }}
+            >
+              WITH YOGA MONASTERY
             </span>
           </span>
         </a>
@@ -78,7 +114,14 @@ export function Header() {
           <div
             role="group"
             aria-label="Language"
-            style={{ display: "inline-flex", background: "var(--cream-deep)", border: "1px solid var(--hairline)", borderRadius: 999, padding: 3, gap: 2 }}
+            style={{
+              display: "inline-flex",
+              background: "var(--cream-deep)",
+              border: "1px solid var(--hairline)",
+              borderRadius: 999,
+              padding: 3,
+              gap: 2,
+            }}
           >
             {(["sv", "en"] as const).map((l) => (
               <button
@@ -113,14 +156,18 @@ export function Header() {
             className="btn btn-primary"
             style={{ padding: "11px 22px", fontSize: 15 }}
           >
-            <span className="long">{t("register")}</span>
+            <span className="reg-label">{t("register")}</span>
           </a>
         </div>
       </div>
 
       <style>{`
         @media (max-width: 720px) { .brand-sub { display: none !important; } }
-        @media (max-width: 560px) { .brand-text { display: none !important; } .long { display: none !important; } .header-inner { height: 64px !important; } }
+        @media (max-width: 560px) {
+          .brand-text { display: none !important; }
+          .reg-label { display: none !important; }
+          .wrap { height: 64px !important; }
+        }
       `}</style>
     </header>
   );
