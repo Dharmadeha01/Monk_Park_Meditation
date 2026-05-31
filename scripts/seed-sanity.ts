@@ -15,8 +15,10 @@ const client = createClient({
 async function seed() {
   console.log("Seeding siteSettings...");
 
-  await client.createIfNotExists({
-    _id: "siteSettings",
+  // Create as a draft first (works with Editor token).
+  // After running this, open Sanity Studio and click Publish on the siteSettings document.
+  await client.createOrReplace({
+    _id: "drafts.siteSettings",
     _type: "siteSettings",
 
     // Hero
@@ -135,7 +137,8 @@ async function seed() {
     monasteryUrl: "https://yogamonastery.org/",
   });
 
-  console.log("✓ siteSettings seeded.");
+  console.log("✓ siteSettings draft created.");
+  console.log("→ Next step: open Sanity Studio and click Publish on the siteSettings document.");
 }
 
 seed().catch(console.error);

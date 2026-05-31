@@ -1,11 +1,11 @@
-import createMiddleware from "next-intl/middleware";
-import { routing } from "./i18n/routing";
+import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const intlMiddleware = createMiddleware(routing);
-
+// Minimal proxy: just pass through.
+// Root "/" → "/sv" is handled by redirects in next.config.ts.
+// Locale is read from the URL [locale] segment by next-intl.
 export function proxy(request: NextRequest) {
-  return intlMiddleware(request);
+  return NextResponse.next();
 }
 
 export const config = {

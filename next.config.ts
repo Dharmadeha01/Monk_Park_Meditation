@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // / → /sv (permanent: false so it's easy to change later)
+      { source: "/", destination: "/sv", permanent: false },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);

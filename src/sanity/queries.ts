@@ -33,7 +33,8 @@ export type SiteSettings = {
   monasteryUrl?: string;
 };
 
-const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
+// Falls back to draft if no published version exists yet
+const SITE_SETTINGS_QUERY = `*[_id in ["siteSettings", "drafts.siteSettings"]] | order(_id asc) [0]{
   heroTitleSv, heroTitleEn,
   heroTaglineSv, heroTaglineEn,
   "heroImageUrl": heroImage.asset->url,
