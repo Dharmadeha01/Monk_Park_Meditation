@@ -13,6 +13,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://meditation-monk-park.vercel.app";
+  const metadataBase = new URL(siteUrl);
 
   const titles = {
     sv: "Meditation med en munk i parken",
@@ -27,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const desc = descs[locale as "sv" | "en"] || descs.en;
 
   return {
+    metadataBase,
     title,
     description: desc,
     alternates: {
