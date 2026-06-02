@@ -5,6 +5,7 @@ type HeroProps = {
   hero: {
     title: string;
     tagline: string;
+    imageUrl?: string;
     pills: { day: string; time: string; place: string; price: string };
   };
   form: {
@@ -61,7 +62,7 @@ export function Hero({ hero, form }: HeroProps) {
       style={{
         position: "relative",
         isolation: "isolate",
-        paddingBlock: "clamp(40px,7vw,88px) clamp(48px,8vw,104px)",
+        paddingBlock: "clamp(32px,5vw,64px) clamp(36px,5.5vw,72px)",
         overflow: "hidden",
       }}
     >
@@ -75,6 +76,16 @@ export function Hero({ hero, form }: HeroProps) {
             radial-gradient(80% 70% at 85% 8%, rgba(232,104,26,0.42) 0%, rgba(232,104,26,0) 40%),
             linear-gradient(180deg, #cdd6bd 0%, #b7c5a4 38%, #93a77f 72%, #6f855f 100%)
           `,
+        }}
+      />
+      {/* Hero photo (Sanity-editable, falls back to /hero.jpg) */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", inset: 0, zIndex: -2,
+          backgroundImage: `url(${hero.imageUrl || "/hero.jpg"})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       />
       {/* Legibility scrim */}

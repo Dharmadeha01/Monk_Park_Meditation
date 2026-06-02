@@ -11,6 +11,7 @@ export type PageContent = {
   hero: {
     title: string;
     tagline: string;
+    imageUrl?: string;
     pills: { day: string; time: string; place: string; price: string };
   };
   form: {
@@ -113,6 +114,7 @@ export async function getPageContent(locale: string): Promise<PageContent> {
     hero: {
       title: pick("heroTitle", "hero.h1"),
       tagline: pick("heroTagline", "hero.tagline"),
+      imageUrl: s?.heroImageUrl || undefined,
       pills: {
         day: pick("eventDay", "hero.pills.day"),
         time: s?.eventTime || t("hero.pills.time"),
