@@ -33,7 +33,13 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Stop iOS/Safari from inflating font sizes in landscape, which throws off
+     the carefully tuned clamp() typography on mobile. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   margin: 0;

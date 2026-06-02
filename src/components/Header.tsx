@@ -63,7 +63,7 @@ export function Header() {
       }}
     >
       <div
-        className="wrap"
+        className="wrap header-bar"
         style={{
           height: 72,
           display: "flex",
@@ -168,20 +168,38 @@ export function Header() {
             {...btnHover}
             href="#register"
             onClick={scrollToForm}
-            className="btn btn-primary"
+            className="btn btn-primary reg-btn"
+            aria-label={t("register")}
             style={{ padding: "11px 22px", fontSize: 15 }}
           >
             <span className="reg-label">{t("register")}</span>
+            {/* Calendar-check icon — shown only on narrow screens where the
+                text label is hidden, so the button is never empty. */}
+            <svg
+              className="reg-icon"
+              width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="4.5" width="18" height="16" rx="2.5" />
+              <path d="M3 9h18M8 2.5v4M16 2.5v4M9 14.5l2.2 2.2L15.5 12" />
+            </svg>
           </motion.a>
         </div>
       </div>
 
       <style>{`
+        /* Icon is hidden by default; the text label carries the button. */
+        .reg-icon { display: none; }
         @media (max-width: 720px) { .brand-sub { display: none !important; } }
         @media (max-width: 560px) {
           .brand-text { display: none !important; }
+          /* On narrow screens swap the text label for a compact icon so the
+             register button is square and tappable instead of an empty pill. */
           .reg-label { display: none !important; }
-          .wrap { height: 64px !important; }
+          .reg-icon { display: inline-flex !important; }
+          .reg-btn { padding: 11px 13px !important; }
+          .header-bar { height: 64px !important; }
         }
       `}</style>
     </motion.header>
