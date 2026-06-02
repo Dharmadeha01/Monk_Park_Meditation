@@ -2,7 +2,6 @@ export const siteSettingsSchema = {
   name: "siteSettings",
   title: "Site Settings",
   type: "document",
-  __experimental_actions: ["update", "publish"],
   fields: [
     // Hero
     { name: "heroTitleSv", title: "Hero Title (SV)", type: "string" },
