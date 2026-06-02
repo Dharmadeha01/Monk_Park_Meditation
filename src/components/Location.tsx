@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { FadeInView } from "./FadeInView";
+import { scaleIn } from "@/lib/animations";
 
 type Props = { location: { lead: string; mapEmbedSrc?: string } };
 
@@ -18,7 +19,7 @@ export function Location({ location }: Props) {
           </div>
         </FadeInView>
 
-        <FadeInView delay={0.1}>
+        <FadeInView delay={0.1} variants={scaleIn}>
           <div style={{
             marginTop: "clamp(28px,4vw,40px)",
             borderRadius: "var(--radius-lg)",

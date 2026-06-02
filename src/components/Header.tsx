@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { motion, useReducedMotion } from "framer-motion";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import Image from "next/image";
 
@@ -11,6 +12,18 @@ export function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const reduce = useReducedMotion();
+
+  const headerAnim = reduce
+    ? {}
+    : {
+        initial: { y: -10, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        transition: { duration: 0.5, delay: 0.1, ease: "easeOut" as const },
+      };
+  const btnHover = reduce
+    ? {}
+    : { whileHover: { scale: 1.03 }, whileTap: { scale: 0.97 }, transition: { duration: 0.15 } };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -35,7 +48,8 @@ export function Header() {
   }
 
   return (
-    <header
+    <motion.header
+      {...headerAnim}
       style={{
         position: "sticky",
         top: 0,
@@ -150,14 +164,15 @@ export function Header() {
           </div>
 
           {/* Register button */}
-          <a
+          <motion.a
+            {...btnHover}
             href="#register"
             onClick={scrollToForm}
             className="btn btn-primary"
             style={{ padding: "11px 22px", fontSize: 15 }}
           >
             <span className="reg-label">{t("register")}</span>
-          </a>
+          </motion.a>
         </div>
       </div>
 
@@ -169,6 +184,6 @@ export function Header() {
           .wrap { height: 64px !important; }
         }
       `}</style>
-    </header>
+    </motion.header>
   );
 }

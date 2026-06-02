@@ -1,7 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { motion, useReducedMotion } from "framer-motion";
 import { FadeInView } from "./FadeInView";
+import { staggerContainer, fadeUp } from "@/lib/animations";
 
 const icons = {
   mantra: (
@@ -36,8 +38,20 @@ type AboutProps = {
 
 export function About({ about }: AboutProps) {
   const t = useTranslations("about");
+  const reduce = useReducedMotion();
 
   const iconList = [icons.mantra, icons.meditation, icons.tea];
+
+  // motion.div with no animation props (reduced motion) renders static.
+  const gridProps = reduce
+    ? {}
+    : {
+        variants: staggerContainer,
+        initial: "hidden" as const,
+        whileInView: "visible" as const,
+        viewport: { once: true, margin: "-60px" },
+      };
+  const cardProps = reduce ? {} : { variants: fadeUp };
 
   return (
     <section className="section-pad" id="about" style={{ background: "var(--cream)" }}>
@@ -50,12 +64,12 @@ export function About({ about }: AboutProps) {
           </div>
         </FadeInView>
 
-        {/* Phase cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "clamp(18px,2.4vw,28px)", alignItems: "stretch" }} className="phase-grid">
+        {/* Phase cards — cascade left → right */}
+        <motion.div {...gridProps} style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "clamp(18px,2.4vw,28px)", alignItems: "stretch" }} className="phase-grid">
           {about.steps.map((s, i) => {
             const icon = iconList[i] ?? iconList[0];
             return (
-              <FadeInView key={i} delay={i * 0.08}>
+              <motion.div key={i} {...cardProps} style={{ height: "100%" }}>
                 <div
                   style={{
                     background: "var(--card)", border: "1px solid var(--hairline)",
@@ -80,15 +94,15 @@ export function About({ about }: AboutProps) {
                   <h3 style={{ fontSize: 23, marginBottom: 9 }}>{s.title}</h3>
                   <p style={{ color: "var(--ink-soft)", fontSize: 15.5, marginTop: "auto" }}>{s.desc}</p>
                 </div>
-              </FadeInView>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* About foot */}
-        <FadeInView delay={0.1}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: "clamp(20px,3vw,40px)", marginTop: "clamp(34px,4vw,52px)", alignItems: "center" }} className="about-foot">
-            {/* What to bring */}
+        <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: "clamp(20px,3vw,40px)", marginTop: "clamp(34px,4vw,52px)", alignItems: "center" }} className="about-foot">
+          {/* What to bring */}
+          <FadeInView delay={0.1}>
             <div>
               <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 400, fontSize: 21, marginBottom: 14 }}>{about.bringHeading}</h4>
               <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
@@ -108,15 +122,17 @@ export function About({ about }: AboutProps) {
                 ))}
               </ul>
             </div>
-            {/* Donation */}
+          </FadeInView>
+          {/* Donation */}
+          <FadeInView delay={0.15}>
             <div style={{ background: "var(--green-soft)", borderRadius: "var(--radius)", padding: "24px 26px" }}>
               <span style={{ display: "inline-block", fontFamily: "var(--font-head)", fontSize: 19, color: "var(--green)", marginBottom: 6 }}>
                 {t("donationFreeTag")}
               </span>
               <p style={{ color: "#3f4d39", fontSize: 15 }}>{about.donationNote}</p>
             </div>
-          </div>
-        </FadeInView>
+          </FadeInView>
+        </div>
       </div>
 
       <style>{`

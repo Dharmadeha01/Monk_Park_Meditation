@@ -1,4 +1,7 @@
+"use client";
+
 import { useTranslations } from "next-intl";
+import { motion, useReducedMotion } from "framer-motion";
 import { HeroForm } from "./HeroForm";
 import { HeroImage } from "./HeroImage";
 
@@ -19,8 +22,30 @@ type HeroProps = {
   };
 };
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 export function Hero({ hero, form }: HeroProps) {
   const t = useTranslations("hero");
+  const reduce = useReducedMotion();
+
+  // Above-the-fold load animation: fadeUp with a per-element delay.
+  // When reduced motion is on, returns no animation props (renders static).
+  const up = (delay: number, duration = 0.6) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration, delay, ease: EASE },
+        };
+
+  const cardAnim = reduce
+    ? {}
+    : {
+        initial: { opacity: 0, scale: 0.96 },
+        animate: { opacity: 1, scale: 1 },
+        transition: { duration: 0.5, delay: 0.4, ease: EASE },
+      };
 
   const pills = [
     {
@@ -80,7 +105,7 @@ export function Hero({ hero, form }: HeroProps) {
           `,
         }}
       />
-      {/* 2. Hero photo (Sanity-editable, falls back to /hero.jpg) */}
+      {/* 2. Hero photo (Sanity-editable, falls back to /hero.jpg) — fades in on load */}
       <HeroImage src={hero.imageUrl} />
       {/* 3. Legibility scrim */}
       <div
@@ -105,13 +130,15 @@ export function Hero({ hero, form }: HeroProps) {
         >
           {/* Copy */}
           <div style={{ color: "#fff", maxWidth: 600 }}>
-            <span
+            <motion.span
+              {...up(0.2)}
               className="kicker"
               style={{ color: "#ffe6cf", marginBottom: 16, display: "inline-flex" }}
             >
               {t("kicker")}
-            </span>
-            <h1
+            </motion.span>
+            <motion.h1
+              {...up(0.35, 0.8)}
               style={{
                 fontSize: "clamp(40px,6vw,74px)",
                 fontVariationSettings: '"SOFT" 60, "WONK" 0, "opsz" 130',
@@ -121,8 +148,9 @@ export function Hero({ hero, form }: HeroProps) {
               }}
             >
               {hero.title}
-            </h1>
-            <p
+            </motion.h1>
+            <motion.p
+              {...up(0.5)}
               style={{
                 fontSize: "clamp(17px,2vw,21px)",
                 color: "rgba(255,255,255,0.94)",
@@ -132,9 +160,9 @@ export function Hero({ hero, form }: HeroProps) {
               }}
             >
               {hero.tagline}
-            </p>
+            </motion.p>
             {/* Pills */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
+            <motion.div {...up(0.6)} style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
               {pills.map(({ label, icon }) => (
                 <span
                   key={label}
@@ -156,11 +184,13 @@ export function Hero({ hero, form }: HeroProps) {
                   {label}
                 </span>
               ))}
-            </div>
+            </motion.div>
           </div>
 
-          {/* Registration card */}
-          <HeroForm content={form} />
+          {/* Registration card — gently settles into place */}
+          <motion.div {...cardAnim}>
+            <HeroForm content={form} />
+          </motion.div>
         </div>
       </div>
 

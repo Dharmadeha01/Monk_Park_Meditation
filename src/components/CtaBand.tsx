@@ -1,11 +1,17 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { motion, useReducedMotion } from "framer-motion";
+import { FadeInView } from "./FadeInView";
 
 type Props = { cta: { h2: string; button: string } };
 
 export function CtaBand({ cta }: Props) {
   const t = useTranslations("cta");
+  const reduce = useReducedMotion();
+  const btnHover = reduce
+    ? {}
+    : { whileHover: { scale: 1.03 }, whileTap: { scale: 0.97 }, transition: { duration: 0.15 } };
 
   return (
     <section style={{ background: "var(--orange)", color: "#fff", position: "relative", overflow: "hidden" }}>
@@ -30,38 +36,43 @@ export function CtaBand({ cta }: Props) {
       </svg>
 
       <div className="wrap" style={{ paddingBlock: "clamp(56px,8vw,92px)", textAlign: "center", position: "relative", zIndex: 1 }}>
-        <span className="kicker" style={{ color: "rgba(255,255,255,0.85)", justifyContent: "center", display: "inline-flex" }}>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 9 }}>
-            <span style={{ width: 26, height: 1.5, background: "rgba(255,255,255,0.7)", opacity: 1, display: "inline-block" }} />
-            {t("kicker")}
+        <FadeInView>
+          <span className="kicker" style={{ color: "rgba(255,255,255,0.85)", justifyContent: "center", display: "inline-flex" }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 9 }}>
+              <span style={{ width: 26, height: 1.5, background: "rgba(255,255,255,0.7)", opacity: 1, display: "inline-block" }} />
+              {t("kicker")}
+            </span>
           </span>
-        </span>
-        <h2
-          style={{
-            color: "#fff",
-            fontSize: "clamp(34px,5vw,60px)",
-            margin: "16px auto 28px",
-            maxWidth: "16ch",
-          }}
-        >
-          {cta.h2}
-        </h2>
-        <a
-          href="#register"
-          onClick={(e) => {
-            e.preventDefault();
-            const el = document.getElementById("register");
-            if (!el) return;
-            const top = el.getBoundingClientRect().top + window.scrollY - 72;
-            window.scrollTo({ top, behavior: "smooth" });
-          }}
-          className="btn btn-primary"
-          style={{ background: "var(--cream)", color: "var(--ink)", boxShadow: "0 8px 22px rgba(42,33,24,0.22)" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#fff"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--cream)"; }}
-        >
-          {cta.button}
-        </a>
+          <h2
+            style={{
+              color: "#fff",
+              fontSize: "clamp(34px,5vw,60px)",
+              margin: "16px auto 28px",
+              maxWidth: "16ch",
+            }}
+          >
+            {cta.h2}
+          </h2>
+        </FadeInView>
+        <FadeInView delay={0.1}>
+          <motion.a
+            {...btnHover}
+            href="#register"
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById("register");
+              if (!el) return;
+              const top = el.getBoundingClientRect().top + window.scrollY - 72;
+              window.scrollTo({ top, behavior: "smooth" });
+            }}
+            className="btn btn-primary"
+            style={{ background: "var(--cream)", color: "var(--ink)", boxShadow: "0 8px 22px rgba(42,33,24,0.22)" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#fff"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--cream)"; }}
+          >
+            {cta.button}
+          </motion.a>
+        </FadeInView>
       </div>
     </section>
   );

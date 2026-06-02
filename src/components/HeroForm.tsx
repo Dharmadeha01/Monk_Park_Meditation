@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { motion, useReducedMotion } from "framer-motion";
 
 type FormContent = {
   title: string;
@@ -14,6 +15,10 @@ type FormContent = {
 
 export function HeroForm({ content }: { content: FormContent }) {
   const t = useTranslations("form");
+  const reduce = useReducedMotion();
+  const hover = reduce
+    ? {}
+    : { whileHover: { scale: 1.03 }, whileTap: { scale: 0.97 }, transition: { duration: 0.15 } };
   const locale = useLocale();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -161,14 +166,15 @@ export function HeroForm({ content }: { content: FormContent }) {
             <p style={{ fontSize: 13, color: "#c0492b", marginBottom: 12, textAlign: "center" }}>{serverErr}</p>
           )}
 
-          <button
+          <motion.button
+            {...hover}
             type="submit"
             disabled={status === "loading"}
             className="btn btn-primary btn-block"
             style={{ opacity: status === "loading" ? 0.7 : 1 }}
           >
             {status === "loading" ? "…" : content.button}
-          </button>
+          </motion.button>
 
           <p style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "var(--ink-faint)", marginTop: 14, lineHeight: 1.45 }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}>

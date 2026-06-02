@@ -2,14 +2,34 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FadeInView } from "./FadeInView";
+import { fadeUp } from "@/lib/animations";
 
 type Props = { faq: { items: { q: string; a: string }[] } };
+
+// Slightly tighter stagger than the shared container (spec: 0.08s for FAQ).
+const faqContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
 
 export function FAQ({ faq }: Props) {
   const t = useTranslations("faq");
   const [openId, setOpenId] = useState<number | null>(null);
   const items = faq.items;
+  const reduce = useReducedMotion();
+
+  // motion.div with no animation props (reduced motion) renders static.
+  const listProps = reduce
+    ? {}
+    : {
+        variants: faqContainer,
+        initial: "hidden" as const,
+        whileInView: "visible" as const,
+        viewport: { once: true, margin: "-60px" },
+      };
+  const itemProps = reduce ? {} : { variants: fadeUp };
 
   return (
     <section className="section-pad" id="faq" style={{ background: "var(--cream-deep)" }}>
@@ -21,11 +41,11 @@ export function FAQ({ faq }: Props) {
           </div>
         </FadeInView>
 
-        <div style={{ maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", gap: 14 }}>
+        <motion.div {...listProps} style={{ maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", gap: 14 }}>
           {items.map((item, i) => {
             const isOpen = openId === i;
             return (
-              <FadeInView key={i} delay={i * 0.06}>
+              <motion.div key={i} {...itemProps}>
                 <div
                   style={{
                     background: "var(--card)",
@@ -59,19 +79,36 @@ export function FAQ({ faq }: Props) {
                       <path d="M12 5v14M5 12h14" />
                     </svg>
                   </button>
-                  <div
-                    className="faq-a"
-                    style={{ maxHeight: isOpen ? 400 : 0, overflow: "hidden", transition: "max-height 0.3s ease" }}
-                  >
-                    <div style={{ padding: "0 clamp(22px,3vw,32px) clamp(22px,2.6vw,28px)", color: "var(--ink-soft)", fontSize: 16.5 }}>
-                      {item.a}
-                    </div>
-                  </div>
+
+                  {reduce ? (
+                    isOpen && (
+                      <div style={{ padding: "0 clamp(22px,3vw,32px) clamp(22px,2.6vw,28px)", color: "var(--ink-soft)", fontSize: 16.5 }}>
+                        {item.a}
+                      </div>
+                    )
+                  ) : (
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          key="answer"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          style={{ overflow: "hidden" }}
+                        >
+                          <div style={{ padding: "0 clamp(22px,3vw,32px) clamp(22px,2.6vw,28px)", color: "var(--ink-soft)", fontSize: 16.5 }}>
+                            {item.a}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  )}
                 </div>
-              </FadeInView>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { FadeInView } from "./FadeInView";
+import { scaleIn } from "@/lib/animations";
 
 type Props = {
   teacher: {
@@ -21,8 +22,8 @@ export function Teacher({ teacher }: Props) {
     <section className="section-pad" id="teacher" style={{ background: "var(--cream-deep)" }}>
       <div className="wrap">
         <div style={{ display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: "clamp(30px,5vw,70px)", alignItems: "center" }} className="teacher-grid">
-          {/* Portrait */}
-          <FadeInView>
+          {/* Portrait — gently materialises */}
+          <FadeInView variants={scaleIn}>
             <div style={{
               width: "100%",
               aspectRatio: "4/5",
@@ -45,7 +46,7 @@ export function Teacher({ teacher }: Props) {
           </FadeInView>
 
           {/* Copy */}
-          <FadeInView delay={0.1}>
+          <FadeInView delay={0.15}>
             <div>
               <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--orange)", marginBottom: 10 }}>
                 {t("role")}
