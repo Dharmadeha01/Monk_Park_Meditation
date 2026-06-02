@@ -110,6 +110,7 @@ export function Hero({ hero, form }: HeroProps) {
       {/* 3. Legibility scrim */}
       <div
         aria-hidden="true"
+        className="hero-scrim"
         style={{
           position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
           background: `
@@ -140,7 +141,7 @@ export function Hero({ hero, form }: HeroProps) {
             <motion.h1
               {...up(0.35, 0.8)}
               style={{
-                fontSize: "clamp(40px,6vw,74px)",
+                fontSize: "clamp(34px,8vw,74px)",
                 fontVariationSettings: '"SOFT" 60, "WONK" 0, "opsz" 130',
                 color: "#fff",
                 textShadow: "0 2px 24px rgba(42,33,24,0.28)",
@@ -197,6 +198,13 @@ export function Hero({ hero, form }: HeroProps) {
       <style>{`
         @media (max-width: 900px) {
           .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          /* The angled scrim only darkens the top-left corner, which leaves the
+             white copy unreadable over the brighter parts of the photo once the
+             layout stacks. Add a top-down dark wash over the copy column. */
+          .hero-scrim {
+            background:
+              linear-gradient(180deg, rgba(42,33,24,0.55) 0%, rgba(42,33,24,0.30) 38%, rgba(42,33,24,0.05) 64%, rgba(42,33,24,0) 100%) !important;
+          }
         }
       `}</style>
     </section>

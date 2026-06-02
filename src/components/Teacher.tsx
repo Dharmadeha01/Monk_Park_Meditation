@@ -34,7 +34,7 @@ export function Teacher({ teacher }: Props) {
             }}>
               {imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={imageUrl} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <img src={imageUrl} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%" }} />
               ) : (
                 <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#d9ddcd" }}>
                   <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="1.5" strokeLinecap="round">

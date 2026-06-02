@@ -20,7 +20,7 @@ export function Location({ location }: Props) {
         </FadeInView>
 
         <FadeInView delay={0.1} variants={scaleIn}>
-          <div style={{
+          <div className="map-frame" style={{
             marginTop: "clamp(28px,4vw,40px)",
             borderRadius: "var(--radius-lg)",
             overflow: "hidden",
@@ -91,6 +91,12 @@ export function Location({ location }: Props) {
           </div>
         </FadeInView>
       </div>
+
+      <style>{`
+        /* A 16/7 strip is too short to read on a phone — give the map more height. */
+        @media (max-width: 720px) { .map-frame { aspect-ratio: 4 / 3 !important; } }
+        @media (max-width: 480px) { .map-frame { aspect-ratio: 1 / 1 !important; } }
+      `}</style>
     </section>
   );
 }
