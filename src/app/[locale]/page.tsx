@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { getSiteSettings, loc } from "@/sanity/queries";
+import { getPageContent } from "@/lib/content";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -17,31 +17,22 @@ export default async function Page({ params }: Props) {
   // Required without middleware — tells next-intl the locale for this request
   setRequestLocale(locale);
 
-  const settings = await getSiteSettings();
+  const content = await getPageContent(locale);
 
   return (
     <>
       <Header />
       <main id="top">
-        <Hero />
-        <About />
-        <Teacher
-          teacherImageUrl={settings?.teacherImageUrl}
-          monasteryUrl={
-            settings?.monasteryUrl ||
-            loc(settings, "monasteryUrl", locale) ||
-            "https://yogamonastery.org/"
-          }
-        />
-        <Location mapEmbedSrc={settings?.mapEmbedSrc} />
-        <FAQ />
-        <CtaBand />
+        <Hero hero={content.hero} form={content.form} />
+        <About about={content.about} />
+        <Teacher teacher={content.teacher} />
+        <Location location={content.location} />
+        <FAQ faq={content.faq} />
+        <CtaBand cta={content.cta} />
       </main>
       <Footer
-        monasteryUrl={settings?.monasteryUrl || "https://yogamonastery.org/"}
-        instagramUrl={
-          settings?.instagramUrl || "https://www.instagram.com/yoga.monastery/"
-        }
+        monasteryUrl={content.footer.monasteryUrl}
+        instagramUrl={content.footer.instagramUrl}
       />
     </>
   );

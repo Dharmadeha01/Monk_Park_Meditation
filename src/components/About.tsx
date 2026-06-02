@@ -24,14 +24,20 @@ const icons = {
   ),
 };
 
-export function About() {
+type AboutProps = {
+  about: {
+    lead: string;
+    steps: { dur: string; title: string; desc: string }[];
+    bringHeading: string;
+    bringItems: string[];
+    donationNote: string;
+  };
+};
+
+export function About({ about }: AboutProps) {
   const t = useTranslations("about");
 
-  const steps = [
-    { key: "mantra", icon: icons.mantra },
-    { key: "meditation", icon: icons.meditation },
-    { key: "tea", icon: icons.tea },
-  ] as const;
+  const iconList = [icons.mantra, icons.meditation, icons.tea];
 
   return (
     <section className="section-pad" id="about" style={{ background: "var(--cream)" }}>
@@ -40,17 +46,16 @@ export function About() {
           <div className="section-head center">
             <span className="kicker">{t("kicker")}</span>
             <h2>{t("h2")}</h2>
-            <p className="lead">{t("lead")}</p>
+            <p className="lead">{about.lead}</p>
           </div>
         </FadeInView>
 
         {/* Phase cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "clamp(18px,2.4vw,28px)", alignItems: "stretch" }} className="phase-grid">
-          {steps.map(({ key, icon }, i) => {
-            const step = t.raw("steps") as Array<{ dur: string; title: string; desc: string }>;
-            const s = step[i];
+          {about.steps.map((s, i) => {
+            const icon = iconList[i] ?? iconList[0];
             return (
-              <FadeInView key={key} delay={i * 0.08}>
+              <FadeInView key={i} delay={i * 0.08}>
                 <div
                   style={{
                     background: "var(--card)", border: "1px solid var(--hairline)",
@@ -85,9 +90,9 @@ export function About() {
           <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: "clamp(20px,3vw,40px)", marginTop: "clamp(34px,4vw,52px)", alignItems: "center" }} className="about-foot">
             {/* What to bring */}
             <div>
-              <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 400, fontSize: 21, marginBottom: 14 }}>{t("bringHeading")}</h4>
+              <h4 style={{ fontFamily: "var(--font-head)", fontWeight: 400, fontSize: 21, marginBottom: 14 }}>{about.bringHeading}</h4>
               <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
-                {(t.raw("bringItems") as string[]).map((item, i) => (
+                {about.bringItems.map((item, i) => (
                   <li key={i} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 16, color: "var(--ink-soft)" }}>
                     {i === 0 ? (
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -108,7 +113,7 @@ export function About() {
               <span style={{ display: "inline-block", fontFamily: "var(--font-head)", fontSize: 19, color: "var(--green)", marginBottom: 6 }}>
                 {t("donationFreeTag")}
               </span>
-              <p style={{ color: "#3f4d39", fontSize: 15 }}>{t("donationNote")}</p>
+              <p style={{ color: "#3f4d39", fontSize: 15 }}>{about.donationNote}</p>
             </div>
           </div>
         </FadeInView>

@@ -1,10 +1,11 @@
 import { useTranslations } from "next-intl";
 import { FadeInView } from "./FadeInView";
 
-type Props = { mapEmbedSrc?: string };
+type Props = { location: { lead: string; mapEmbedSrc?: string } };
 
-export function Location({ mapEmbedSrc }: Props) {
+export function Location({ location }: Props) {
   const t = useTranslations("location");
+  const { lead, mapEmbedSrc } = location;
 
   return (
     <section className="section-pad" id="location" style={{ background: "var(--cream)" }}>
@@ -13,7 +14,7 @@ export function Location({ mapEmbedSrc }: Props) {
           <div className="section-head">
             <span className="kicker">{t("kicker")}</span>
             <h2>{t("h2")}</h2>
-            <p className="lead">{t("lead")}</p>
+            <p className="lead">{lead}</p>
           </div>
         </FadeInView>
 

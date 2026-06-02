@@ -3,7 +3,16 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
-export function HeroForm() {
+type FormContent = {
+  title: string;
+  nameLabel: string;
+  phoneLabel: string;
+  button: string;
+  success: string;
+  note: string;
+};
+
+export function HeroForm({ content }: { content: FormContent }) {
   const t = useTranslations("form");
   const locale = useLocale();
   const [name, setName] = useState("");
@@ -80,7 +89,7 @@ export function HeroForm() {
               <line x1="25.4" y1="74.6" x2="20.5" y2="79.5" />
             </g>
           </svg>
-          <h2 style={{ fontSize: "clamp(26px, 3vw, 33px)", marginBottom: 10 }}>{t("successTitle")}</h2>
+          <h2 style={{ fontSize: "clamp(26px, 3vw, 33px)", marginBottom: 10 }}>{content.success}</h2>
           <p style={{ color: "var(--ink-soft)", fontSize: 15.5, maxWidth: "30ch", margin: "0 auto 8px" }}>{t("successBody")}</p>
           <button
             onClick={reset}
@@ -97,13 +106,13 @@ export function HeroForm() {
             <span>{t("eyebrow")}</span>
           </div>
 
-          <h2 style={{ fontSize: "clamp(27px, 3vw, 34px)", marginBottom: 6 }}>{t("title")}</h2>
+          <h2 style={{ fontSize: "clamp(27px, 3vw, 34px)", marginBottom: 6 }}>{content.title}</h2>
           <p style={{ color: "var(--ink-soft)", fontSize: 15.5, marginBottom: 22 }}>{t("sub")}</p>
 
           {/* Name */}
           <div style={{ marginBottom: 15 }}>
             <label htmlFor="f-name" style={{ display: "block", fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)", marginBottom: 7 }}>
-              {t("nameLabel")}
+              {content.nameLabel}
             </label>
             <input
               id="f-name"
@@ -127,7 +136,7 @@ export function HeroForm() {
           {/* Phone */}
           <div style={{ marginBottom: 20 }}>
             <label htmlFor="f-phone" style={{ display: "block", fontSize: 13.5, fontWeight: 600, color: "var(--ink-soft)", marginBottom: 7 }}>
-              {t("phoneLabel")}
+              {content.phoneLabel}
             </label>
             <input
               id="f-phone"
@@ -158,14 +167,14 @@ export function HeroForm() {
             className="btn btn-primary btn-block"
             style={{ opacity: status === "loading" ? 0.7 : 1 }}
           >
-            {status === "loading" ? "…" : t("button")}
+            {status === "loading" ? "…" : content.button}
           </button>
 
           <p style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "var(--ink-faint)", marginTop: 14, lineHeight: 1.45 }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: "none", marginTop: 1 }}>
               <path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.6A8.5 8.5 0 1 1 21 11.5Z" />
             </svg>
-            <span>{t("note")}</span>
+            <span>{content.note}</span>
           </p>
         </form>
       )}

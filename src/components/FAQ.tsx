@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { FadeInView } from "./FadeInView";
 
-export function FAQ() {
+type Props = { faq: { items: { q: string; a: string }[] } };
+
+export function FAQ({ faq }: Props) {
   const t = useTranslations("faq");
   const [openId, setOpenId] = useState<number | null>(null);
-  const items = t.raw("items") as Array<{ q: string; a: string }>;
+  const items = faq.items;
 
   return (
     <section className="section-pad" id="faq" style={{ background: "var(--cream-deep)" }}>

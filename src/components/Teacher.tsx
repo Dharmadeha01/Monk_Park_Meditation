@@ -3,10 +3,19 @@
 import { useTranslations } from "next-intl";
 import { FadeInView } from "./FadeInView";
 
-type Props = { teacherImageUrl?: string; monasteryUrl?: string };
+type Props = {
+  teacher: {
+    name: string;
+    bio: string[];
+    linkLabel: string;
+    imageUrl?: string;
+    monasteryUrl: string;
+  };
+};
 
-export function Teacher({ teacherImageUrl, monasteryUrl = "https://yogamonastery.org/" }: Props) {
+export function Teacher({ teacher }: Props) {
   const t = useTranslations("teacher");
+  const { name, bio, linkLabel, imageUrl, monasteryUrl } = teacher;
 
   return (
     <section className="section-pad" id="teacher" style={{ background: "var(--cream-deep)" }}>
@@ -22,9 +31,9 @@ export function Teacher({ teacherImageUrl, monasteryUrl = "https://yogamonastery
               background: "var(--green-soft)",
               overflow: "hidden",
             }}>
-              {teacherImageUrl ? (
+              {imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={teacherImageUrl} alt={t("name")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <img src={imageUrl} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               ) : (
                 <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#d9ddcd" }}>
                   <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="1.5" strokeLinecap="round">
@@ -41,9 +50,10 @@ export function Teacher({ teacherImageUrl, monasteryUrl = "https://yogamonastery
               <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--orange)", marginBottom: 10 }}>
                 {t("role")}
               </div>
-              <h2 style={{ fontSize: "clamp(32px,4vw,46px)", marginBottom: 18 }}>{t("name")}</h2>
-              <p style={{ color: "var(--ink-soft)", fontSize: 17, marginBottom: 16 }}>{t("bio1")}</p>
-              <p style={{ color: "var(--ink-soft)", fontSize: 17, marginBottom: 24 }}>{t("bio2")}</p>
+              <h2 style={{ fontSize: "clamp(32px,4vw,46px)", marginBottom: 18 }}>{name}</h2>
+              {bio.map((para, i) => (
+                <p key={i} style={{ color: "var(--ink-soft)", fontSize: 17, marginBottom: i === bio.length - 1 ? 24 : 16 }}>{para}</p>
+              ))}
               <a
                 href={monasteryUrl}
                 target="_blank"
@@ -52,7 +62,7 @@ export function Teacher({ teacherImageUrl, monasteryUrl = "https://yogamonastery
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.gap = "11px"; (e.currentTarget as HTMLElement).style.color = "var(--orange-deep)"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.gap = "7px"; (e.currentTarget as HTMLElement).style.color = "var(--orange)"; }}
               >
-                <span>{t("linkLabel")}</span>
+                <span>{linkLabel}</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>

@@ -2,7 +2,9 @@
 
 import { useTranslations } from "next-intl";
 
-export function CtaBand() {
+type Props = { cta: { h2: string; button: string } };
+
+export function CtaBand({ cta }: Props) {
   const t = useTranslations("cta");
 
   return (
@@ -42,7 +44,7 @@ export function CtaBand() {
             maxWidth: "16ch",
           }}
         >
-          {t("h2")}
+          {cta.h2}
         </h2>
         <a
           href="#register"
@@ -58,7 +60,7 @@ export function CtaBand() {
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#fff"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--cream)"; }}
         >
-          {t("button")}
+          {cta.button}
         </a>
       </div>
     </section>

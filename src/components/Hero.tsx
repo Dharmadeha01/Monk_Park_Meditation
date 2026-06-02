@@ -1,12 +1,28 @@
 import { useTranslations } from "next-intl";
 import { HeroForm } from "./HeroForm";
 
-export function Hero() {
+type HeroProps = {
+  hero: {
+    title: string;
+    tagline: string;
+    pills: { day: string; time: string; place: string; price: string };
+  };
+  form: {
+    title: string;
+    nameLabel: string;
+    phoneLabel: string;
+    button: string;
+    success: string;
+    note: string;
+  };
+};
+
+export function Hero({ hero, form }: HeroProps) {
   const t = useTranslations("hero");
 
   const pills = [
     {
-      label: t("pills.day"),
+      label: hero.pills.day,
       icon: (
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="4.5" width="18" height="16" rx="2.5" /><path d="M3 9h18M8 2.5v4M16 2.5v4" />
@@ -14,7 +30,7 @@ export function Hero() {
       ),
     },
     {
-      label: t("pills.time"),
+      label: hero.pills.time,
       icon: (
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" />
@@ -22,7 +38,7 @@ export function Hero() {
       ),
     },
     {
-      label: t("pills.place"),
+      label: hero.pills.place,
       icon: (
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="2.6" />
@@ -30,7 +46,7 @@ export function Hero() {
       ),
     },
     {
-      label: t("pills.price"),
+      label: hero.pills.price,
       icon: (
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z" />
@@ -99,7 +115,7 @@ export function Hero() {
                 marginBottom: 18,
               }}
             >
-              {t("h1")}
+              {hero.title}
             </h1>
             <p
               style={{
@@ -110,7 +126,7 @@ export function Hero() {
                 textShadow: "0 1px 10px rgba(42,33,24,0.3)",
               }}
             >
-              {t("tagline")}
+              {hero.tagline}
             </p>
             {/* Pills */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
@@ -139,7 +155,7 @@ export function Hero() {
           </div>
 
           {/* Registration card */}
-          <HeroForm />
+          <HeroForm content={form} />
         </div>
       </div>
 
