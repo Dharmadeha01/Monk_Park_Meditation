@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { HeroForm } from "./HeroForm";
+import { HeroImage } from "./HeroImage";
 
 type HeroProps = {
   hero: {
@@ -61,16 +62,17 @@ export function Hero({ hero, form }: HeroProps) {
       id="register"
       style={{
         position: "relative",
-        isolation: "isolate",
         paddingBlock: "clamp(32px,5vw,64px) clamp(36px,5.5vw,72px)",
         overflow: "hidden",
       }}
     >
-      {/* Background: dappled forest sunrise */}
+      {/* Layer order via DOM order, all at z-index 0 (no negative z-index,
+          no isolation) so the photo paints reliably in every browser. */}
+      {/* 1. Dappled forest-sunrise gradient — also the fallback if the photo fails */}
       <div
         aria-hidden="true"
         style={{
-          position: "absolute", inset: 0, zIndex: -3,
+          position: "absolute", inset: 0, zIndex: 0,
           background: `
             radial-gradient(120% 90% at 78% 18%, rgba(243,178,92,0.55) 0%, rgba(243,178,92,0) 46%),
             radial-gradient(80% 70% at 85% 8%, rgba(232,104,26,0.42) 0%, rgba(232,104,26,0) 40%),
@@ -78,21 +80,13 @@ export function Hero({ hero, form }: HeroProps) {
           `,
         }}
       />
-      {/* Hero photo (Sanity-editable, falls back to /hero.jpg) */}
+      {/* 2. Hero photo (Sanity-editable, falls back to /hero.jpg) */}
+      <HeroImage src={hero.imageUrl} />
+      {/* 3. Legibility scrim */}
       <div
         aria-hidden="true"
         style={{
-          position: "absolute", inset: 0, zIndex: -2,
-          backgroundImage: `url(${hero.imageUrl || "/hero.jpg"})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      {/* Legibility scrim */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute", inset: 0, zIndex: -1, pointerEvents: "none",
+          position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
           background: `
             linear-gradient(180deg, rgba(250,244,234,0.35) 0%, rgba(250,244,234,0) 30%),
             linear-gradient(105deg, rgba(42,33,24,0.40) 0%, rgba(42,33,24,0.16) 42%, rgba(42,33,24,0) 68%)
@@ -100,7 +94,7 @@ export function Hero({ hero, form }: HeroProps) {
         }}
       />
 
-      <div className="wrap" style={{ position: "relative" }}>
+      <div className="wrap" style={{ position: "relative", zIndex: 1 }}>
         <div style={{
           display: "grid",
           gridTemplateColumns: "1.05fr 0.95fr",
